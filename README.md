@@ -14,6 +14,8 @@ This will allow tasks to manage their own non-volatile configuration files as we
 
 This design is meant to be a service, so I suggest ensuring you only have one copy of the EEPROM_FS object in your system. The recommended method is to override the constructor and implement a Singleton design pattern for the service. When you're using it, make sure you make proper use of the getLock() and releaseLock() methods to ensure you don't have collisions from multiple threads/tasks accessing data concurrently.
 
+Have a look at the testApp program to see variations of how the API can be exercised.
+
 ## API
 
     // all write operations must be enabled immediately prior to each call
