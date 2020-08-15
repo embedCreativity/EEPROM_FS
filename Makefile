@@ -21,4 +21,3 @@ all: testApp
 clean:
 	rm -f *.o testApp
 
-
