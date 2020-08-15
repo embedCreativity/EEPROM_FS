@@ -24,8 +24,8 @@
     #include <fstream>
     #include <assert.h>
     // lock initialization
-    #define initLock()    {                                \
-        assert (pthread_mutex_init(&lock, NULL) == 0);    \
+    #define initLock()    {                             \
+        assert (pthread_mutex_init(&lock, NULL) == 0);  \
     }
     // non-volatile file location
     #define UNIX_NONVOLATILE_FILE    "nonvolatile.bin"
@@ -41,13 +41,13 @@
     #include <xdc/runtime/System.h>
     #include <driverlib/eeprom.h>
     // lock initialization
-    #define initLock()    {                                                \
+    #define initLock()    {                                             \
         Error_Block ebLock;                                             \
-        Error_init(&ebLock);                                             \
-        lock = Semaphore_create(1, NULL, &ebLock);                        \
-        if ( lock == NULL ) {                                             \
+        Error_init(&ebLock);                                            \
+        lock = Semaphore_create(1, NULL, &ebLock);                      \
+        if ( lock == NULL ) {                                           \
             System_abort("ERROR: EEPROMFS: Semaphore creation failed"); \
-        }                                                                \
+        }                                                               \
     }
 
 #else // Assert failure

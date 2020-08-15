@@ -50,7 +50,7 @@ char* EEPROMStatus::c_str ()
         snprintf(szStatus, EEPROMSTATUS_BUF_LEN, "NOT FOUND");
         break;
     case EEPROM_ERROR_INSUFFICIENT_STORAGE:
-        snprintf(szStatus, EEPROMSTATUS_BUF_LEN, "OUT OF MEMORY");
+        snprintf(szStatus, EEPROMSTATUS_BUF_LEN, "OUT OF STORAGE");
         break;
     case EEPROM_ERROR_INSUFFICIENT_MEMORY:
         snprintf(szStatus, EEPROMSTATUS_BUF_LEN, "INSUFFICIENT RAM");
