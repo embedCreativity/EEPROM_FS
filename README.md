@@ -17,7 +17,7 @@ This design is meant to be a service, so I suggest ensuring you only have one co
 Have a look at the testApp program to see variations of how the API can be exercised.
 
 ## API
-
+``` C
     // all write operations must be enabled immediately prior to each call
     void enableWrite();
 
@@ -67,3 +67,4 @@ Have a look at the testApp program to see variations of how the API can be exerc
     // Public accessor for formatEEPROM(). This will erase entire contents of EEPROM and
     //   initialize the file system table
     bool format();
+```
