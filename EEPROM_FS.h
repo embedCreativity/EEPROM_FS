@@ -95,6 +95,9 @@ public:
     // Get EEPROM status
     EEPROMStatus getStatus();
 
+    // Get map containing list of active fileIds along with their file size
+    const std::map<uint8_t, uint16_t> getActiveFiles();
+
     // Tasks requiring access should call this to get a file handle
     //   Internally, this calls 'new'
     //   It is fine for a task to have a handle open over its entire lifetime,

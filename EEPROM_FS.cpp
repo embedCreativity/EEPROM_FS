@@ -166,6 +166,21 @@ EEPROMStatus EEPROMFS::getStatus() // TODO: Am I making a copy of the entire cla
     return status;
 }
 
+const std::map<uint8_t, uint16_t> EEPROMFS::getActiveFiles()
+{
+    std::map<uint8_t, uint16_t> retSet;
+
+    for (std::set<uint8_t, std::less<uint8_t> >::iterator it = activeFiles.begin();
+        it != activeFiles.end(); ++it)
+    {
+        uint8_t id = *it;
+        uint16_t size = fileTable[*it].size;
+        retSet.insert(std::pair<uint8_t, uint16_t>(id, size));
+    }
+
+    return retSet;
+}
+
 handle_t* EEPROMFS::open(int index)
 {
     handle_t* tempHandle;

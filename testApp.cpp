@@ -494,6 +494,22 @@ int main ( void )
     hEeprom.releaseLock();
     hEeprom.close(1);
 
+    /***************************************************************************************************************************/
+    std::cout << "------------------------------------------------------------------------------------------------" << std::endl;
+    std::cout << "--> Verify getActiveFiles() <--" << std::endl;
+    std::map<uint8_t, uint16_t> fileMap = hEeprom.getActiveFiles();
+
+    // Create a map iterator and point to beginning of map
+    std::map<uint8_t, uint16_t>::iterator mit = fileMap.begin();
+    // Iterate over the map using Iterator till end.
+    for (std::map<uint8_t, uint16_t>::iterator mit = fileMap.begin(); mit != fileMap.end(); mit++)
+    {
+        // Accessing KEY from element pointed by it.
+        uint8_t fileId = mit->first;
+        // Accessing VALUE from element pointed by it.
+        uint16_t size = mit->second;
+        std::cout << "FileId: " << unsigned(fileId) << ", size: " << size << std::endl;
+    }
 
     return 0;
 }
