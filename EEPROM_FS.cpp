@@ -196,6 +196,24 @@ handle_t* EEPROMFS::open(int index)
         return NULL;
     }
 
+    // Bounds check user input
+    if (0 > index || index >= EEPROM_MAX_NUM_FILES)
+    {
+        status.setStatus(EEPROMStatus::EEPROM_ERROR_BAD_PARAMS);
+        releaseLock();
+        return NULL;
+    }
+
+    // Verify that the file has exists
+    std::set<uint8_t, std::less<uint8_t> >::iterator fit;
+    fit = std::find(activeFiles.begin(), activeFiles.end(), index);
+    if (fit == activeFiles.end())
+    {
+        status.setStatus(EEPROMStatus::EEPROM_ERROR_FILE_NOT_FOUND);
+        releaseLock();
+        return NULL;
+    }
+
     // Look for object managing file at given index
     it = handleManager.find(index);
 
