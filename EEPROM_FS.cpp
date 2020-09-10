@@ -18,6 +18,11 @@
 
 #include <EEPROM_FS.h>
 
+//#define DEBUG_EEPROM
+#ifdef DEBUG_EEPROM
+#include "BoardSupport.h"  // DEBUG -> added Sleep_ms() statement prior to dumping EEPROM contents
+#endif
+
 // OS-dependent adapter declarations
 #if defined(__linux__)
     #include <iostream>
@@ -61,7 +66,7 @@
 /************************************/
 /*   Debug Print Support            */
 /************************************/
-//#define DEBUG_PRINT // Comment out to disable debug print statements
+#define DEBUG_PRINT // Comment out to disable debug print statements
 
 #ifdef DEBUG_PRINT
 #define debugPrint(format, ...) {\
@@ -841,6 +846,31 @@ bool EEPROMFS::write( uint8_t* buf, uint32_t startAddress, uint32_t len )
         status.setStatus(EEPROMStatus::EEPROM_ERROR_WRITE_ERROR);
         return false;
     }
+
+#ifdef DEBUG_EEPROM
+    uint8_t eepromDump[16];
+    uint8_t i;
+    uint16_t j;
+
+    Sleep_ms(100);
+    j = 0;
+    while ( j < (2048 - 1) ) {
+        EEPROMRead((uint32_t *)eepromDump, j, 16);
+        debugPrint("DEBUG: EEPROM dump\n");
+        debugPrint("@%d: ", j);
+        for ( i = 0; i < 16; i++ ) {
+            debugPrint("0x%x", eepromDump[i]);
+            if ( ( 0x20 <= eepromDump[i]) && (eepromDump[i] <= 0x7F) ) {
+                debugPrint("(%c) ", eepromDump[i]);
+            } else {
+                debugPrint("    ");
+            }
+        }
+        debugPrint("\n");
+        j += 16;
+    }
+#endif
+
 #else // Assert failure
     #error Environment must either be defined as __linux__ or TIVAWARE. Add additional support for new environments as needed.
 #endif
