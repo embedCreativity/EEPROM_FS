@@ -133,10 +133,8 @@ uint32_t EEPROMFS::getTotalCapacity()
 {
     uint32_t size;
 
-    getLock();
     writeEnabled = false;
     size = eepromSize;
-    releaseLock();
 
     return size;
 }
