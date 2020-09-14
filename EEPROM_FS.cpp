@@ -19,9 +19,8 @@
 #include <EEPROM_FS.h>
 
 //#define DEBUG_EEPROM
-#ifdef DEBUG_EEPROM
-#include "BoardSupport.h"  // DEBUG -> added Sleep_ms() statement prior to dumping EEPROM contents
-#endif
+
+#include "BoardSupport.h"
 
 // OS-dependent adapter declarations
 #if defined(__linux__)
@@ -880,6 +879,12 @@ bool EEPROMFS::write( uint8_t* buf, uint32_t startAddress, uint32_t len )
 bool EEPROMFS::init()
 {
     bool success;
+
+    // Enable EEPROM peripheral and wait for ready state
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_EEPROM0);
+    while(!SysCtlPeripheralReady(SYSCTL_PERIPH_EEPROM0))
+    {
+    }
 
     if ( EEPROM_INIT_OK == EEPROMInit() )
     {
